@@ -1,5 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div.form-container
+    h1.title-form= title
+    div.text-infos Please log-in:
+
+    form(method='POST' action='/log-in')
+      div.form-group
+        label.label-form(for='username') Email:
+        input#email.form-control(
+          type='email', 
+          placeholder='Email' 
+          name='username' 
+          required = 'true'
+          value=(undefined=== user ? '' : user.username))
+
+        label(for='password') Password:
+        input#password.form-control(
+          type='password', 
+          placeholder='Password' 
+          name='password' 
+          required = 'true'
+        )
+      button.btn.btn-primary(type='submit') Submit
