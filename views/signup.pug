@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  div.form-container
+    h1.title-form= title
+    div.text-infos Please sign-up:
+
+    p.auth-alternative Already registered? 
+      a(href="log-in") Log in
+
+    form(method='POST' action='')
+      div.form-group
+
+        label.label-form(for='username') Username:
+        input#email.form-control(
+          type='username', 
+          placeholder='Username' 
+          name='username' 
+          required = 'true'
+          value=(undefined=== user ? '' : user.username))
+        if (error)
+          p(style="color: red;") #{error}
+
+        label.label-form(for='password') Password:
+        input#password.form-control(
+          type='password', 
+          placeholder='Password' 
+          name='password' 
+          required = 'true'
+          value=(undefined=== user ? '' : user.password))
+
+        label.label-form(for='confPassword') Confirm password:
+        input#confPassword.form-control(
+          type='password', 
+          placeholder='Confirm password' 
+          name='confPassword' 
+          required = 'true'
+        )
+        if (passwordConfirmationError)
+          p(style="color: red;") #{passwordConfirmationError}
+
+      button.btn.btn-primary(type='submit') Submit
+
+    if (errors)
+      p #{errors}
