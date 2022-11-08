@@ -6,10 +6,10 @@ const passport = require("passport");
 
 
 exports.users_list = (req,res) => {               // Display all users page GET
-  res.render('index', { title: 'USERS',  user: req.user });
+  res.render('index', { title: 'USERS'});
 };
 exports.profile_detail = (req,res) => {           // Display profile page GET
-  res.render('profile', { title: 'PROFILE',  user: req.user});
+  res.render('profile', { title: 'PROFILE'});
 };
 
 
