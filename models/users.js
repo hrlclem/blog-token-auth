@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const UsersSchema = new Schema({
     username: {
         type: String, 
         min: [3, "Username length is too small"],
-        required: [true, "please add an email"],
+        required: [true, "please add a username"],
         },
     password: {
         type: String, 
@@ -22,8 +22,8 @@ const UserSchema = new Schema({
         }],
 });
 
-UserSchema.virtual("url").get(function () {
+UsersSchema.virtual("url").get(function () {
     return "/users/" + this._id;
   });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Users", UsersSchema);

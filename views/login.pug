@@ -7,10 +7,10 @@ block content
 
     form(method='POST' action='/log-in')
       div.form-group
-        label.label-form(for='username') Email:
-        input#email.form-control(
-          type='email', 
-          placeholder='Email' 
+        label.label-form(for='username') Username:
+        input#username.form-control(
+          type='text', 
+          placeholder='Username' 
           name='username' 
           required = 'true'
           value=(undefined=== user ? '' : user.username))

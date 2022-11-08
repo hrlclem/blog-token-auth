@@ -1,8 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: #0C61B2;
 }
+
+
+
+
+/* HEADER CSS */
+.container-div{
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.header{
+  margin-bottom: 40px;
+  box-shadow: 5px 5px 8px #b5b9bd;
+}
+.header-left{
+  display:flex;
+  justify-content: center;
+  text-align: center;
+}
+  .logo-text-div{
+    display:flex;
+    position: relative;
+    font-size: 20px;
+    font-weight: 800;
+    color:rgb(68, 68, 68);
+  }
+    .logo-text-down{
+      position:absolute;
+      top:14px;
+      color:rgb(68, 68, 68);
+    }
+    .logo-text-up{
+      position:absolute;
+      top:4px;
+      color:rgb(68, 68, 68);
+    }
+    .logo-text:hover{
+      color:rgb(68, 68, 68);    
+    }
+  .title-header{
+    font-size: 25px;
+    margin-left: 50px;
+    color: #0C61B2
+  }
+  .header-right{
+    display:flex;
+    align-items: center;
+  }
+    .nav-right{
+      display:flex;
+      align-items: center;
+      font-family: 'Libre Caslon Text', serif;
+
+    }
+    .header-click{
+      font-family: 'Noto Sans JP', sans-serif;
+      margin-right: 22px;
+    }
+    .header-btn{
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+.logo-header-div{
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav-link{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 20px 10px 20px;
+  background-color: #202325;
+  border-radius: 12px;
+  margin-left: 20px;
+  font-family: 'Libre Caslon Text', serif;
+}
+.welcome-txt{
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.nav-link:hover{
+  background-color: #111213;
+}
+  .nav-text{
+    display:block;
+    margin:auto;
+  }
+  .d-block{
+    display:block;
+    margin:auto;
+    margin-top: 5%;
+    filter: invert(100%) sepia(100%) saturate(38%) hue-rotate(321deg) brightness(110%) contrast(110%);
+  }
+
