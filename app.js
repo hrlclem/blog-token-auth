@@ -44,7 +44,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
-  console.log("req.user"+req.user)
   next();
 });
 
@@ -58,7 +57,6 @@ passport.use(
   new LocalStrategy((username, password, done) => {
     Users.findOne({ username: username }, 
       (err, user) => {
-        console.log("1"+user)
       if (err) { return done(err) }
       if (!user) { return done(null, false, { message: "Incorrect username" }) }
       bcrypt.compare(password, user.password, (err, res) => {
@@ -71,13 +69,10 @@ passport.use(
 );
 
 passport.serializeUser(function(user, done) {
-  console.log("2"+user)
-
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log("3"+id);
 
   Users.findById(id, (err, user) => {
     if(err){

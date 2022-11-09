@@ -30,12 +30,12 @@ exports.article_add_post = [             // Create new article POST
       if(!errors.isEmpty()) {
         return res.render("addArticle", { title: "Add a new article", errors: errors.array() });
       }
-      console.log(currentUser);
+      console.log(req);
 
       const article = new Article({
         title: req.body.title,
         content: req.body.content,
-        user: currentUser.id,
+        // user: currentUser.id,
         date: Date.now(),
       })
 
