@@ -5,7 +5,7 @@ block content
     h1.title-form= title
     div.text-infos Please log-in:
 
-    form(method='POST' action='/log-in')
+    form(method='POST' action='/login')
       div.form-group
         label.label-form(for='username') Username:
         input#username.form-control(
@@ -13,7 +13,7 @@ block content
           placeholder='Username' 
           name='username' 
           required = 'true'
-          value=(undefined=== user ? '' : user.username))
+          value=(undefined=== user ? '' : currentUser.username))
 
         label(for='password') Password:
         input#password.form-control(

@@ -12,7 +12,7 @@ router.post('/auth/signup', user_controller.signup_post);        // Process sign
 router.get('/auth/login', user_controller.login_get);            // Display login page POST
 router.post('/auth/login', user_controller.login_post);          // Process login  POST
 
-router.post('/auth/nologin', user_controller.nologin_get);       // No Login error page
+router.get('/auth/nologin', user_controller.nologin_get);       // No Login error page
 
 // Logout
 

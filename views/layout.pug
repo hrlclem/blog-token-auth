@@ -7,6 +7,9 @@ html
     link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
     script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js", integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj", crossorigin="anonymous")
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js", integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV", crossorigin="anonymous")
+    script(src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin")
+    script.
+      tinymce.init({selector: '#mytextarea'})
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     header
@@ -19,7 +22,7 @@ html
               a(href='/')
                 a.d-flex.align-items-center.my-lg-0.me-lg-auto.text-decoration-none.title-header(href='/') Token Club
 
-            if !user
+            if !currentUser
               div.header-right
                 ul.nav.nav-right
                   a.header-click(href='/users/auth/login')
@@ -27,17 +30,12 @@ html
                   li.nav-link.text-white.header-btn
                     a(href='/users/auth/signup')
                       span.nav-text.header-btn Sign up
-              div.header-right
-                ul.nav.col-lg-auto.justify-content-center.my-md-0.text-small.nav-right
-                  li.nav-link.text-white
-                    a(href="/log-out")
-                      span.nav-text.header-btn Log out
             else 
               div.header-right
                 ul.nav.col-lg-auto.justify-content-center.my-md-0.text-small.nav-right
                   a.text-white.welcome-txt(href=`/users/${currentUser.id}`) Welcome, #{currentUser.name}
                   li.nav-link.text-white
-                    a(href="/log-out")
+                    a(href="/logout")
                       span.nav-text.header-btn Log out
 
     div.content

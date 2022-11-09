@@ -89,7 +89,7 @@ passport.deserializeUser(function(id, done) {
   })
 });
 
-app.post("/log-in",
+app.post("/login",
     passport.authenticate("local", {
       session: true,
       successRedirect: "/users/profile",
@@ -97,7 +97,7 @@ app.post("/log-in",
   })
 );
 
-app.get("/log-out", (req, res, next) => {
+app.get("/logout", (req, res, next) => {
   console.log("logout")
   req.logout(function (err) {
     if (err) {

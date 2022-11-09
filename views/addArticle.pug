@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  div.form-container
+    h1.title-form= title
+    div.text-infos 
+
+    form(method='POST' action='')
+      div.form-group
+        label.label-form(for='title') Title:
+        input#title.form-control(
+          type='text', 
+          placeholder='Title of your article' 
+          name='title' 
+          required = 'true'
+        )
+        if (error)
+          p(style="color: red;") #{error}
+
+        label.label-form(for='content') Content:
+        input#content.form-control(
+          type='text', 
+          placeholder='Add some content' 
+          name='content' 
+          required = 'true'
+        )
+        if (error)
+          p(style="color: red;") #{error}
+      button.btn.btn-primary(type='submit') Submit
+
+      // Add button clear
+
+    if (errors)
+      p #{errors}

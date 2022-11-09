@@ -3,4 +3,14 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  div #{currentUser.username}
+  if currentUser
+    div #{currentUser.username}
+
+    // Shows all articles from all writers
+
+  else
+    div Please 
+        
+    // Shows all articles from all writers
+
+    
