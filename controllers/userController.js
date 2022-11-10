@@ -62,7 +62,7 @@ exports.signup_post = [                           // Process signup POST
           }
           else 
           {
-            res.redirect('/auth/login');   
+            res.redirect('/users/profile');   
           }
       });
     })
@@ -84,5 +84,3 @@ exports.nologin_get = (req,res) => {               // NO LOGIN page
   res.render('nologin', { title: 'NOLOGIN' });
 };
 
-
-// Logout

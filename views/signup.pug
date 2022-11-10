@@ -13,12 +13,12 @@ block content
       div.form-group
 
         label.label-form(for='username') Username:
-        input#email.form-control(
+        input#username.form-control(
           type='text', 
           placeholder='Username' 
           name='username' 
           required = 'true'
-          value=(undefined=== user ? '' : currentUser.username))
+          value=(undefined=== currentUser ? '' : currentUser.username))
         if (error)
           p(style="color: red;") #{error}
 
@@ -28,7 +28,7 @@ block content
           placeholder='Password' 
           name='password' 
           required = 'true'
-          value=(undefined=== user ? '' : currentUser.password))
+          value=(undefined=== currentUser ? '' : currentUser.password))
 
         label.label-form(for='confPassword') Confirm password:
         input#confPassword.form-control(

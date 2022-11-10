@@ -2,7 +2,6 @@ require('dotenv').config()
 
 const createError = require('http-errors');
 const express = require('express');
-const router = express.Router();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -11,6 +10,7 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require('body-parser')
+
 const jwt = require('jsonwebtoken');
 const passportJWT = require("passport-jwt");
 const JWTStrategy   = passportJWT.Strategy;
@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(cookieParser(`${process.env.SECRET_SESSION}`));
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
@@ -53,9 +53,11 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users',  usersRouter);
 app.use('/articles', articlesRouter);
 app.use('/articles/:articleid/comments', commmentsRouter);
+
+
 
 //Local Strategy authentification
 passport.use(
@@ -73,23 +75,25 @@ passport.use(
   })
 );
 
+// Login middleware
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+      done(null, user.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+        Users.findById(id, (err, user) => {
+          if(err){
+              done(null, false, {error:err});
+          } else {
+              done(null, user);
+          }
+    })
 });
 
-passport.deserializeUser(function(id, done) {
-  Users.findById(id, (err, user) => {
-    if(err){
-        done(null, false, {error:err});
-    } else {
-        done(null, user);
-    }
-  })
-});
 
+//Login
 app.post('/login', function (req, res, next) {
-    console.log("working")
-    passport.authenticate('local', {session: true}, (err, user, info) => {
+  passport.authenticate('local', {session: true}, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
                 message: 'Something is not right',
@@ -100,32 +104,38 @@ app.post('/login', function (req, res, next) {
         if (err) {
             res.send(err);
         }
-        res.locals.currentUser = req.user
 
-        const token = jwt.sign(user.toJSON(), process.env.SECRET_TOKEN);
-        return res.render('profile', { title: 'Logged-in', currentUser:user, token:token });
+        const token = jwt.sign({data:user}, process.env.SECRET_TOKEN, { expiresIn: 86400 * 7 });
+        res.locals.currentUser = req.user
+        res.locals.currentToken = token
+        console.log(token)
+        return res.redirect('/users/profile');
       });
     })(req, res);
   });
 
-
+  // Token initialization
 passport.use(new JWTStrategy({
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey   : process.env.SECRET_TOKEN,
-},
-function (jwtPayload, done) {
-  return UserModel.findOneById(jwtPayload.id)
-      .then(user => {
-          return done(null, user);
-      })
-      .catch(err => {
-          return done(err);
-      });
-}
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey   : process.env.SECRET_TOKEN,
+    }
+    ,() => {console.log(process.env.SECRET_TOKEN)}
+    , (jwtPayload, done) => {
+                                          console.log(jwtPayload.sub)
+
+                                          console.log('running check token')
+                                          console.log(ExtractJWT.fromAuthHeaderAsBearerToken())
+      return Users.findOneById(jwtPayload.user._id)
+        .then(user => {
+            return done(null, user);
+        })
+        .catch(err => {
+            return done(err);
+        });
+    }
 ));
 
-
-
+// Logout function
 app.get("/logout", (req, res, next) => {
   console.log("logout")
   req.logout(function (err) {
