@@ -87,59 +87,26 @@ passport.deserializeUser(function(id, done) {
   })
 });
 
-app.post("/login", (req, res, next) => {
-  console.log("running")
-    passport.authenticate('local', {
-      session: true,
-      successRedirect: "/users/profile",
-      failureRedirect: "/auth/nologin",
-    }, 
-    (err, user, info) => {     
-      console.log("step1")
- 
-      if (err) {
-          return res.status(401).json(err);
-      }
-      if (user) {
-          const token = jwt.sign(user, process.env.SECRET_TOKEN);
-          return res.status(200).json({
-              user:user,
-              token:token
-          });
-      } else {
-          res.status(401).json(info);
-      }
-    })(req, res, next);
-})
+app.post('/login', function (req, res, next) {
+    console.log("working")
+    passport.authenticate('local', {session: true}, (err, user, info) => {
+        if (err || !user) {
+            return res.status(400).json({
+                message: 'Something is not right',
+                user : user
+            });
+        }
+    req.login(user, {session: true}, (err) => {
+        if (err) {
+            res.send(err);
+        }
+        res.locals.currentUser = req.user
 
-
-// BASIC LOGIN STRATEGY
-// app.post("/log-in",
-//     passport.authenticate("local", {
-//       session: true,
-//       successRedirect: "/users/profile",
-//       failureRedirect: "/auth/nologin",
-//   })
-// );
-  
-
-app.post('/login', (req, res, next) => {
-  console.log("all good so far1")
-
-  passport.authenticate('local', {session: true}, (err, user) => {
-      console.log("all good so far2")
-      if (err) {return next(err)};
-      if (!user) {return res.redirect('/', {error: "Couldn't find the user", user: user})}
-
-      req.login(user, {session: true}, (err) => {
-        if (err) {console.log("err 1"); return next(err) }
-      
-      console.log("all good so far3")
-      const token = jwt.sign(user, process.env.SECRET_TOKEN);
-        return res.json({user, token});
+        const token = jwt.sign(user.toJSON(), process.env.SECRET_TOKEN);
+        return res.render('profile', { title: 'Logged-in', currentUser:user, token:token });
       });
-  })
-});
+    })(req, res);
+  });
 
 
 passport.use(new JWTStrategy({

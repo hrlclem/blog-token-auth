@@ -62,9 +62,7 @@ exports.signup_post = [                           // Process signup POST
           }
           else 
           {
-            passport.authenticate('local')(req,res, function() {
-              res.redirect('/users/profile'); 
-            } )        
+            res.redirect('/auth/login');   
           }
       });
     })
