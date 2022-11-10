@@ -10,7 +10,7 @@ router.get('/:profileid', user_controller.profile_detail);  // Display profile p
 router.get('/auth/signup', user_controller.signup_get);          // Process signup GET
 router.post('/auth/signup', user_controller.signup_post);        // Process signup POST
 router.get('/auth/login', user_controller.login_get);            // Display login page POST
-router.post('/auth/login', user_controller.login_post);          // Process login  POST
+// router.post('/auth/login', user_controller.login_post);          // Process login  POST
 
 router.get('/auth/nologin', user_controller.nologin_get);       // No Login error page
 

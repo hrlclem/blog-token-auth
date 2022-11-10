@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const createError = require('http-errors');
 const express = require('express');
+const router = express.Router();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -10,6 +11,10 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require('body-parser')
+const jwt = require('jsonwebtoken');
+const passportJWT = require("passport-jwt");
+const JWTStrategy   = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -73,24 +78,86 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-
   Users.findById(id, (err, user) => {
     if(err){
         done(null, false, {error:err});
-
     } else {
         done(null, user);
     }
   })
 });
 
-app.post("/login",
-    passport.authenticate("local", {
+app.post("/login", (req, res, next) => {
+  console.log("running")
+    passport.authenticate('local', {
       session: true,
       successRedirect: "/users/profile",
-      failureRedirect: "/users/auth/nologin",
+      failureRedirect: "/auth/nologin",
+    }, 
+    (err, user, info) => {     
+      console.log("step1")
+ 
+      if (err) {
+          return res.status(401).json(err);
+      }
+      if (user) {
+          const token = jwt.sign(user, process.env.SECRET_TOKEN);
+          return res.status(200).json({
+              user:user,
+              token:token
+          });
+      } else {
+          res.status(401).json(info);
+      }
+    })(req, res, next);
+})
+
+
+// BASIC LOGIN STRATEGY
+// app.post("/log-in",
+//     passport.authenticate("local", {
+//       session: true,
+//       successRedirect: "/users/profile",
+//       failureRedirect: "/auth/nologin",
+//   })
+// );
+  
+
+app.post('/login', (req, res, next) => {
+  console.log("all good so far1")
+
+  passport.authenticate('local', {session: true}, (err, user) => {
+      console.log("all good so far2")
+      if (err) {return next(err)};
+      if (!user) {return res.redirect('/', {error: "Couldn't find the user", user: user})}
+
+      req.login(user, {session: true}, (err) => {
+        if (err) {console.log("err 1"); return next(err) }
+      
+      console.log("all good so far3")
+      const token = jwt.sign(user, process.env.SECRET_TOKEN);
+        return res.json({user, token});
+      });
   })
-);
+});
+
+
+passport.use(new JWTStrategy({
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey   : process.env.SECRET_TOKEN,
+},
+function (jwtPayload, done) {
+  return UserModel.findOneById(jwtPayload.id)
+      .then(user => {
+          return done(null, user);
+      })
+      .catch(err => {
+          return done(err);
+      });
+}
+));
+
+
 
 app.get("/logout", (req, res, next) => {
   console.log("logout")
