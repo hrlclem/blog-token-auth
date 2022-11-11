@@ -62,10 +62,11 @@ app.use('/articles/:articleid/comments', commmentsRouter);
 //Local Strategy authentification
 passport.use(
   new LocalStrategy((username, password, done) => {
-    Users.findOne({ username: username }, 
-      (err, user) => {
+    Users.findOne({ username: username }, (err, user) => {
       if (err) { return done(err) }
+
       if (!user) { return done(null, false, { message: "Incorrect username" }) }
+
       bcrypt.compare(password, user.password, (err, res) => {
         if (err) return done(err);
         if (res) return done(null, user);
@@ -80,58 +81,57 @@ passport.serializeUser(function(user, done) {
       done(null, user.id);
     });
 
-    passport.deserializeUser(function(id, done) {
-        Users.findById(id, (err, user) => {
-          if(err){
-              done(null, false, {error:err});
-          } else {
-              done(null, user);
-          }
+passport.deserializeUser(function(id, done) {
+      Users.findById(id, (err, user) => {
+        if(err){
+            done(null, false, {error:err});
+        } else {
+            done(null, user);
+        }
     })
 });
 
 
 //Login
 app.post('/login', function (req, res, next) {
-  passport.authenticate('local', {session: true}, (err, user, info) => {
+  passport.authenticate('local', {session: false}, (err, user) => {
         if (err || !user) {
+            console.log("not right")
             return res.status(400).json({
                 message: 'Something is not right',
                 user : user
             });
         }
-    req.login(user, {session: true}, (err) => {
-        if (err) {
-            res.send(err);
-        }
+        
+  req.login(user, {session: true}, (err) => {
+      if (err) {
+          res.send(err);
+      }
+      const token = "bearer "+jwt.sign({data:user}, process.env.SECRET_TOKEN, { expiresIn: "30m" });
+      res.locals.currentUser = req.user
+      res.locals.currentToken = token
+      // res.send({ user: res.locals.currentUser, jwtToken: res.locals.currentToken })
+      return res.redirect('/users/profile');
+    });
+  })(req, res);
+});
 
-        const token = jwt.sign({data:user}, process.env.SECRET_TOKEN, { expiresIn: 86400 * 7 });
-        res.locals.currentUser = req.user
-        res.locals.currentToken = token
-        console.log(token)
-        return res.redirect('/users/profile');
-      });
-    })(req, res);
-  });
-
-  // Token initialization
+// Token initialization
 passport.use(new JWTStrategy({
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey   : process.env.SECRET_TOKEN,
-    }
-    ,() => {console.log(process.env.SECRET_TOKEN)}
-    , (jwtPayload, done) => {
-                                          console.log(jwtPayload.sub)
+      secretOrKey: process.env.SECRET_TOKEN,
+    }, 
+    (jwtPayload, cb) => {
+      console.log(jwtPayload)
+      return Users.findOneById(jwtPayload.id)
+          .then(user => {
+            console.log(user)
 
-                                          console.log('running check token')
-                                          console.log(ExtractJWT.fromAuthHeaderAsBearerToken())
-      return Users.findOneById(jwtPayload.user._id)
-        .then(user => {
-            return done(null, user);
-        })
-        .catch(err => {
-            return done(err);
-        });
+              return cb(null, user);
+          })
+          .catch(err => {
+              return cb(err);
+          });
     }
 ));
 
@@ -170,6 +170,7 @@ app.use(function(err, req, res, next) {
 
 // Import the mongoose module
 const mongoose = require("mongoose");
+const JsonWebTokenError = require('jsonwebtoken/lib/JsonWebTokenError');
 // Set up default mongoose connection
 const mongoDB = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@inventory-app.tdcky6s.mongodb.net/token?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });

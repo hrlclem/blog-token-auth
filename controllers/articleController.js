@@ -30,7 +30,8 @@ exports.article_add_post = [             // Create new article POST
       if(!errors.isEmpty()) {
         return res.render("addArticle", { title: "Add a new article", errors: errors.array() });
       }
-      console.log(req);
+      
+      console.log("req: "+req);
 
       const article = new Article({
         title: req.body.title,
@@ -39,7 +40,7 @@ exports.article_add_post = [             // Create new article POST
         date: Date.now(),
       })
 
-      console.log(article);
+      console.log("article :"+article);
 
 
       await article.save((err) => {
