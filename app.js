@@ -9,13 +9,11 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const bodyParser = require('body-parser')
 
 const jwt = require('jsonwebtoken');
 const passportJWT = require("passport-jwt");
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -41,7 +39,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Server setup
-app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -103,37 +100,31 @@ app.post('/login', function (req, res, next) {
         user
       })
     }
-    if(err) res.send(err);
-    jwt.sign({_id: user._id, email: user.email}, process.env.SECRET_TOKEN, {expiresIn: 3600} , (err, token) => {
-      if(err) return res.status(400).json(err);
-      res.json({token: token, user: {_id: user._id, email: user.email}});
+    if (err || !user) {
+        return res.status(400).json({
+            message: 'Something is not right',
+            user : user
+        });
+    }
+        
+  req.login(user, {session: true}, (err) => {
+      if (err) {
+          res.send(err);
+      }
+      const token = jwt.sign({data:user}, process.env.SECRET_TOKEN, { expiresIn: "30m" });
+      res.locals.currentUser = req.user
+      res.locals.currentToken = token
+      // res.send({ user: res.locals.currentUser, jwtToken: res.locals.currentToken })
+      console.log(token)
+      return res.redirect('/users/profile');
     });
   })(req, res);
 });
 
-//         if (err || !user) {
-//             return res.status(400).json({
-//                 message: 'Something is not right',
-//                 user : user
-//             });
-//         }
-        
-//   req.login(user, {session: true}, (err) => {
-//       if (err) {
-//           res.send(err);
-//       }
-//       const token = "bearer "+jwt.sign({data:user}, process.env.SECRET_TOKEN, { expiresIn: "30m" });
-//       res.locals.currentUser = req.user
-//       res.locals.currentToken = token
-//       // res.send({ user: res.locals.currentUser, jwtToken: res.locals.currentToken })
-//       return res.redirect('/users/profile');
-//     });
-//   })(req, res);
-// });
-
 
 
 // Token initialization
+// ISSUE COMES FROM HERE
 passport.use(new JWTStrategy({
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.SECRET_TOKEN,
