@@ -113,7 +113,6 @@ app.post('/login', function (req, res, next) {
             res.send(err);
         }
 
-        console.log("user: "+ user)
     const token = "Bearer " + jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
     res.locals.currentUser = req.user
     res.locals.currentToken = token

@@ -3,8 +3,8 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  if currentUser
-    div #{currentUser.username}
+  if user
+    div #{user.username}
 
     div
       a(href='/articles/add')
@@ -19,11 +19,10 @@ block content
       each article in articles
         a(href=`${article.url}`)
           div.article-container 
-            p.article-title= article.url
-            p.article-title= article.title
+            p.article-title.font-weight-bold= article.title
             p.article-content= article.content
             p.article-date= article.date
-            p.article-user= article.user
+            p.article-user= article.user.username
         hr.hr-separate
 
 

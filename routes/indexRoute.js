@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Article = require("../models/article")
 
-
 // Display homepage GET
 router.get('/', async (req, res, next) => {
   try{
