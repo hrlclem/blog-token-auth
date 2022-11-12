@@ -15,10 +15,10 @@ const passportJWT = require("passport-jwt");
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const articlesRouter = require('./routes/articles');
-const commmentsRouter = require('./routes/comments');
+const indexRouter = require('./routes/indexRoute');
+const usersRouter = require('./routes/usersRoute');
+const articlesRouter = require('./routes/articlesRoute');
+const commmentsRouter = require('./routes/commentsRoute');
 
 const Users = require("./models/users")
 
@@ -115,8 +115,17 @@ app.post('/login', function (req, res, next) {
       res.locals.currentUser = req.user
       res.locals.currentToken = token
       // res.send({ user: res.locals.currentUser, jwtToken: res.locals.currentToken })
-      console.log(token)
-      return res.redirect('/users/profile');
+      // console.log(token)
+      if (err) {
+        res.send(err);
+      }
+      // res.status(200).json({
+      //       success: true,
+      //       data: {
+      //         user: req.user,
+      //         token: token,
+      //       }});
+        return res.redirect('/users/profile');
     });
   })(req, res);
 });
@@ -133,6 +142,8 @@ passport.use(new JWTStrategy({
       return done(null, jwtPayload);
     }
 ));
+
+
 
 // Logout function
 app.get("/logout", (req, res, next) => {

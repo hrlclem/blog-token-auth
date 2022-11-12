@@ -1,13 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const passport = require("passport");
+// const isAuthenticated = require('../auth/authenticated');
 
 const user_controller = require("../controllers/userController")
 
 // -.com/users/-
 router.get('/', user_controller.users_list);                     // Display all users page GET
 router.get('/profile',                                           // Display profile page GET
-    passport.authenticate('jwt', {session: false}), 
+    // passport.authenticate('jwt', {session: false}), 
+    // isAuthenticated,
+    // https://www.youtube.com/watch?v=favjC6EKFgw
+    (req,res) => {console.log(req.user)},
     user_controller.profile_detail
 ); 
 

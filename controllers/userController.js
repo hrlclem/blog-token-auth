@@ -9,7 +9,7 @@ exports.users_list = (req,res) => {               // Display all users page GET
   res.render('index', { title: 'USERS'});
 };
 exports.profile_detail = (req,res) => {           // Display profile page GET
-  res.render('profile', { title: 'PROFILE'});
+  res.render('profile', { title: 'PROFILE', user:req.user});
 };
 
 

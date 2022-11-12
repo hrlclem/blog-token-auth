@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 const Article = require("../models/article")
 
 exports.articles_list = (req,res) => {                 // Display all articles page GET
+  console.log("articles")
   res.render('index', { title: 'ARTICLES' });
 };
   
