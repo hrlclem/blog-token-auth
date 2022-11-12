@@ -43,7 +43,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(`${process.env.SECRET_SESSION}`));
-// app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
@@ -107,28 +106,24 @@ app.post('/login', function (req, res, next) {
         });
     }
         
-  req.login(user, {session: true}, (err) => {
-      if (err) {
-          res.send(err);
-      }
-      const token = jwt.sign({data:user}, process.env.SECRET_TOKEN, { expiresIn: "30m" });
-      res.locals.currentUser = req.user
-      res.locals.currentToken = token
-      // res.send({ user: res.locals.currentUser, jwtToken: res.locals.currentToken })
-      // console.log(token)
+    req.login(user, {session: true}, (err) => {
+        if (err) {
+            res.send(err);
+        }
+
+        console.log("user: "+ user)
+    const token = "Bearer " + jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
+    res.locals.currentUser = req.user
+    res.locals.currentToken = token
       if (err) {
         res.send(err);
       }
-      // res.status(200).json({
-      //       success: true,
-      //       data: {
-      //         user: req.user,
-      //         token: token,
-      //       }});
-        return res.redirect('/users/profile');
+      // return res.redirect('/users/profile');
+      return res.redirect('/');
     });
   })(req, res);
 });
+
 
 
 
@@ -137,9 +132,21 @@ app.post('/login', function (req, res, next) {
 passport.use(new JWTStrategy({
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.SECRET_TOKEN,
-    }, (jwtPayload, done) => {
+    }, 
+    (req,res, next)=> {console.log("running"), next();},
+    (jwtPayload, done) => {
       console.log(jwtPayload)
-      return done(null, jwtPayload);
+      Users.getUserById(jwtPayload.id, (err, user) => {
+        if(err){
+        return done(err, false);
+        }
+        
+        if(user){
+          return done(null, user);
+        } else {
+          return done(null, false);
+        }
+      });
     }
 ));
 

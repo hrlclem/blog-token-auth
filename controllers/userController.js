@@ -9,14 +9,21 @@ exports.users_list = (req,res) => {               // Display all users page GET
   res.render('index', { title: 'USERS'});
 };
 exports.profile_detail = (req,res) => {           // Display profile page GET
-  res.render('profile', { title: 'PROFILE', user:req.user});
+  res.render('profile', { title: 'PROFILE'});
 };
+
+
 
 
 
 exports.signup_get = (req,res) => {               // Display signup GET
   res.render('signup', { title: 'Please sign-up' });
 };
+
+
+
+
+
 
 exports.signup_post = [                           // Process signup POST
   body("username")

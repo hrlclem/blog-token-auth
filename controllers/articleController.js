@@ -2,7 +2,7 @@ const { body, validationResult } = require("express-validator");
 const Article = require("../models/article")
 
 exports.articles_list = (req,res) => {                 // Display all articles page GET
-  console.log("articles")
+
   res.render('index', { title: 'ARTICLES' });
 };
   
@@ -14,7 +14,7 @@ exports.article_add_get = (req,res) => {               // Create new article GET
   res.render('addArticle', { title: 'Add a new article' });
 };
 
-exports.article_add_post = [             // Create new article POST
+exports.article_add_post = [                            // Create new article POST
   body("title")
     .trim()
     .isLength({ min: 1 },{max: 30})
@@ -31,18 +31,13 @@ exports.article_add_post = [             // Create new article POST
       if(!errors.isEmpty()) {
         return res.render("addArticle", { title: "Add a new article", errors: errors.array() });
       }
-      
-      console.log("req: "+req);
-
+    
       const article = new Article({
         title: req.body.title,
         content: req.body.content,
-        // user: currentUser.id,
+        user: req.user.id,
         date: Date.now(),
       })
-
-      console.log("article :"+article);
-
 
       await article.save((err) => {
         if(err) return next(err);

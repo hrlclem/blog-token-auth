@@ -6,11 +6,17 @@ block content
   if currentUser
     div #{currentUser.username}
 
-    // Shows all articles from all writers
+    div
+      a(href='/articles/add')
+        span.nav-text.header-btn Add article
+
+    //- Shows all articles from all writers
 
   else
-    div Please 
-        
-    // Shows all articles from all writers
+    div Not connected 
+    div
+      a(href='/users/auth/login/')
+        span.nav-text.header-btn LOGIN
+    //- Shows all articles from all writers
 
     
