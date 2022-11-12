@@ -27,7 +27,7 @@ const ArticleSchema = new Schema({
 });
 
 ArticleSchema.virtual("url").get(function () {
-    return "/users/articles/" + this._id;
+    return "/articles/view/" + this._id;
   });
 
 module.exports = mongoose.model("Article", ArticleSchema);

@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    
+    //- If author, ability to delete
+
+    div.article-field
+        div.article-title TITLE
+        p.article-title= article.title
+        p.article-content= article.content
+        p.article-date= article.date
+        p.article-user= article.user
+    
+        hr.hr-separate
+    
+    if article.comments
+        div.comment-div
+            div.comment-list
+            each comment in article.comments
+                div.comment-content= comment.content
+                div.comment-date= comment.date
+        hr.hr-separate
+        //- If author of comment, ability to delete
+    else 
+        div.comment-div
+            p.no-comment-text There is no comment yet, add the first one below! 
+        hr.hr-separate
+ 
+
+    div.form-container
+        h1.title-form Add comment
+        div.text-infos
+        form(method='POST' action='/articles/:articleid/comments/add')
+            div.form-group
+            label.label-form(for='') Content:
+            input#content.form-control(
+                type='text', 
+                placeholder='Add a comment' 
+                name='content' 
+                required = 'true'
+            )
+            if (error)
+                p(style="color: red;") #{error}
+            if (error)
+                p(style="color: red;") #{error}
+            button.btn.btn-primary(type='submit') Submit
+
+
+    if (errors)
+      p #{errors}

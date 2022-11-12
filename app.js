@@ -9,6 +9,7 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const bodyParser = require('body-parser');
 
 const jwt = require('jsonwebtoken');
 const passportJWT = require("passport-jwt");
@@ -43,6 +44,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(`${process.env.SECRET_SESSION}`));
+app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {

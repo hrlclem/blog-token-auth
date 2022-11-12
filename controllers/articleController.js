@@ -1,14 +1,20 @@
 const { body, validationResult } = require("express-validator");
+
 const Article = require("../models/article")
 
 exports.articles_list = (req,res) => {                 // Display all articles page GET
-
   res.render('index', { title: 'ARTICLES' });
 };
   
-exports.article_details_get = (req,res) => {           // Display article page GET
-  res.render('article', { title: 'ARTICLE' });
-};
+exports.article_details_get = async (req,res, next) => {           // Display article page GET
+    try{
+      const article = await Article.findById(req.params.articleid) ;
+      console.log(article)
+      res.render('articleDetail', { title: 'ARTICLE', user: req.user, article:article });
+    } catch (err) {
+      return  next(err);
+    }
+  }
 
 exports.article_add_get = (req,res) => {               // Create new article GET
   res.render('addArticle', { title: 'Add a new article' });
@@ -33,9 +39,9 @@ exports.article_add_post = [                            // Create new article PO
       }
     
       const article = new Article({
+        user: req.user.id,
         title: req.body.title,
         content: req.body.content,
-        user: req.user.id,
         date: Date.now(),
       })
 

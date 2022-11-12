@@ -9,8 +9,23 @@ block content
     div
       a(href='/articles/add')
         span.nav-text.header-btn Add article
+        hr.hr-separate
+        hr.hr-separate
 
-    //- Shows all articles from all writers
+    div.title All articles
+            hr.hr-separate
+
+    div.article-list
+      each article in articles
+        a(href=`${article.url}`)
+          div.article-container 
+            p.article-title= article.url
+            p.article-title= article.title
+            p.article-content= article.content
+            p.article-date= article.date
+            p.article-user= article.user
+        hr.hr-separate
+
 
   else
     div Not connected 
