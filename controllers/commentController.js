@@ -19,22 +19,22 @@ exports.comment_add_post = [                            // Create new article PO
       .withMessage('Content is required!'),   
 
     async (req, res, next) => {
+      const articleid = req.params.articleid
       const errors = validationResult(req);
       if(!errors.isEmpty()) {
         return res.render("articleDetail", { title: "Couldn't add new comment", errors: errors.array() });
       }
-      console.log(req.params.articleid)
-    
+
       const comment = new Comment({
         content: req.body.content,
         date: Date.now(),
         user: req.user.id,
-        article: req.params.articleid,
+        article: articleid,
       })
 
       await comment.save((err) => {
         if(err) return next(err);
-      res.redirect(`/`);
+      res.redirect(`/articles/view/${articleid}`);
     })
   }
 ];

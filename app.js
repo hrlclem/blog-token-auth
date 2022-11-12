@@ -19,7 +19,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const indexRouter = require('./routes/indexRoute');
 const usersRouter = require('./routes/usersRoute');
 const articlesRouter = require('./routes/articlesRoute');
-const commmentsRouter = require('./routes/commentsRoute');
+// const commmentsRouter = require('./routes/commentsRoute');
 
 const Users = require("./models/users")
 
@@ -55,7 +55,7 @@ app.use(function(req, res, next) {
 app.use('/', indexRouter);
 app.use('/users',  usersRouter);
 app.use('/articles', articlesRouter);
-app.use('/articles/:articleid/comments', commmentsRouter);
+// app.use('/articles/:articleid/comments', commmentsRouter);
 
 
 

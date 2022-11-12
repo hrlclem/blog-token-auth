@@ -10,13 +10,14 @@ block content
         p.article-content= article.content
         p.article-date= article.date
         p.article-user= article.user
-    
+        p.article-user= article.comment
+
         hr.hr-separate
     
-    if article.comments
+    if comments
         div.comment-div
             div.comment-list
-            each comment in article.comments
+            each comment in comments
                 div.comment-content= comment.content
                 div.comment-date= comment.date
         hr.hr-separate
@@ -30,7 +31,7 @@ block content
     div.form-container
         h1.title-form Add comment
         div.text-infos
-        form(method='POST' action='/articles/:articleid/comments/add')
+        form(method='POST' action=`/articles/view/${article.id}/comments/add`)
             div.form-group
             label.label-form(for='') Content:
             input#content.form-control(
@@ -39,8 +40,6 @@ block content
                 name='content' 
                 required = 'true'
             )
-            if (error)
-                p(style="color: red;") #{error}
             if (error)
                 p(style="color: red;") #{error}
             button.btn.btn-primary(type='submit') Submit

@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 
 const Article = require("../models/article")
+const Comment = require("../models/comment")
 
 exports.articles_list = (req,res) => {                 // Display all articles page GET
   res.render('index', { title: 'ARTICLES' });
@@ -9,8 +10,9 @@ exports.articles_list = (req,res) => {                 // Display all articles p
 exports.article_details_get = async (req,res, next) => {           // Display article page GET
     try{
       const article = await Article.findById(req.params.articleid) ;
-      console.log(article)
-      res.render('articleDetail', { title: 'ARTICLE', user: req.user, article:article });
+      const comments = await Comment.find({article:req.params.articleid})
+      res.render('articleDetail', { title: 'ARTICLE', user: req.user, article:article, comments:comments });
+    
     } catch (err) {
       return  next(err);
     }
