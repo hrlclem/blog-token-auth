@@ -10,20 +10,17 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require('body-parser');
+const app = express();
+require('./passport');
 
 const jwt = require('jsonwebtoken');
-const passportJWT = require("passport-jwt");
-const JWTStrategy   = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
 
 const indexRouter = require('./routes/indexRoute');
 const usersRouter = require('./routes/usersRoute');
 const articlesRouter = require('./routes/articlesRoute');
-// const commmentsRouter = require('./routes/commentsRoute');
 
 const Users = require("./models/users")
 
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -60,8 +57,7 @@ app.use('/articles', articlesRouter);
 
 
 //Local Strategy authentification
-passport.use(
-  new LocalStrategy((username, password, done) => {
+passport.use(new LocalStrategy((username, password, done) => {
     Users.findOne({ username: username }, (err, user) => {
       if (err) { return done(err) }
 
@@ -94,62 +90,29 @@ passport.deserializeUser(function(id, done) {
 
 //Login
 app.post('/login', function (req, res, next) {
-  passport.authenticate('local', {session: false}, (err, user) => {
-    if(err || !user) {
-      return res.status(400).json({
-        message: 'Could not authenticate',
-        user
-      })
-    }
-    if (err || !user) {
-        return res.status(400).json({
-            message: 'Something is not right',
-            user : user
-        });
-    }
-        
-    req.login(user, {session: true}, (err) => {
-        if (err) {
-            res.send(err);
-        }
-
-    const token = "Bearer " + jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
-    res.locals.currentUser = req.user
-    res.locals.currentToken = token
-      if (err) {
-        res.send(err);
+  passport.authenticate('local', {session: true}, (err, user, info) => {
+      if (err || !user) {
+          return res.status(400).json({
+              message: 'Something is not right',
+              user : user
+          });
       }
-      // return res.redirect('/users/profile');
+          
+      req.login(user, {session: true}, (err) => {
+          if (err) {
+              res.send(err);
+          }
+
+      // const token = "Bearer " + jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
+      const token = jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
+      res.locals.currentUser = req.user
+      res.locals.currentToken = token
       return res.redirect('/');
+      // return res.redirect('/users/profile');
     });
   })(req, res);
 });
 
-
-
-
-// Token initialization
-// ISSUE COMES FROM HERE
-passport.use(new JWTStrategy({
-      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.SECRET_TOKEN,
-    }, 
-    (req,res, next)=> {console.log("running"), next();},
-    (jwtPayload, done) => {
-      console.log(jwtPayload)
-      Users.getUserById(jwtPayload.id, (err, user) => {
-        if(err){
-        return done(err, false);
-        }
-        
-        if(user){
-          return done(null, user);
-        } else {
-          return done(null, false);
-        }
-      });
-    }
-));
 
 
 

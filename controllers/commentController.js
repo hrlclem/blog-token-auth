@@ -7,9 +7,6 @@ exports.comment_list = (req,res) => {                     // Display all comment
   res.render('comment', { title: 'COMMENTS' });
 };
 
-exports.comment_add_get = (req,res) => {                  // Add comment GET
-  res.render('comment', { title: 'COMMENT' });
-};
 
 exports.comment_add_post = [                            // Create new article POST
     body("content")

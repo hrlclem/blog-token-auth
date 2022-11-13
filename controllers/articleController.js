@@ -4,7 +4,7 @@ const Article = require("../models/article")
 const Comment = require("../models/comment")
 
 exports.articles_list = (req,res) => {                 // Display all articles page GET
-  res.render('index', { title: 'ARTICLES' });
+res.render('index', { title: 'ALL ARTICLES' });
 };
   
 exports.article_details_get = async (req,res, next) => {           // Display article page GET

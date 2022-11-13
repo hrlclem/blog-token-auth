@@ -14,7 +14,6 @@ router.get('/view/:articleid', article_controller.article_details_get);      // 
 router.post('/view/:articleid/delete', article_controller.article_delete); // Delete Article
 
 router.get('/view/:articleid/comments/', comment_controller.comment_list);                            // Display all comments GET
-router.get('/view/:articleid/comments/add', comment_controller.comment_add_get);                          // Get comment on article 
 router.post('/view/:articleid/comments/add', comment_controller.comment_add_post);                         // Post comment on article 
 router.delete('/view/:articleid/comments/:commentid/delete', comment_controller.comment_delete);      // Delete Comment
 
