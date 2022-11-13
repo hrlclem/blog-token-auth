@@ -54,7 +54,10 @@ exports.article_add_post = [                            // Create new article PO
     }
 ];
   
-exports.article_delete = (req,res) => {                // Delete Article
-  res.render('article', { title: 'DELETE ARTICLE' });
+exports.article_delete = (req, res, next) => {                // Delete Article
+    Article.findByIdAndRemove(req.params.articleid, function (err) {
+      if(err) return next(err);
+      res.render('articleDetail', { title: 'Article deleted successfully!'});
+    })
 };
 

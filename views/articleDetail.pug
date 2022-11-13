@@ -2,52 +2,65 @@ extends layout
 
 block content
     
-    //- If author, ability to delete
+    if (user && user.id == article.user)
+        form(method='POST' action=`/articles/view/${article.id}/delete`)
+            button.btn.btn-primary(type='submit') DELETE ARTICLE
 
-    div.article-field
-        div.article-title TITLE
-        p.article-title= article.title
-        p.article-content= article.content
-        p.article-date= article.date
-        p.article-user= article.user
-        p.article-user= article.comment
+    if article
+        div.article-field
+            div.article-title TITLE
+            p.article-title= article.title
+            p.article-content= article.content
+            p.article-date= article.date
+            p.article-user= article.user
+            p.article-user= article.comment
 
-        hr.hr-separate
+            hr.hr-separate
+
+
+        if comments
+            div.comment-div
+                div.comment-list
+                each comment in comments
+                    div.comment-content= comment.content
+                    div.comment-date= comment.date
+            hr.hr-separate
+            //- If author of comment, ability to delete
+        else 
+            div.comment-div
+                p.no-comment-text There is no comment yet, add the first one below! 
+            hr.hr-separate
     
-    if comments
-        div.comment-div
-            div.comment-list
-            each comment in comments
-                div.comment-content= comment.content
-                div.comment-date= comment.date
-        hr.hr-separate
-        //- If author of comment, ability to delete
-    else 
-        div.comment-div
-            p.no-comment-text There is no comment yet, add the first one below! 
-        hr.hr-separate
+        if user
+            div.form-container
+                h1.title-form Add comment
+                div.text-infos
+                form(method='POST' action=`/articles/view/${article.id}/comments/add`)
+                    div.form-group
+                    label.label-form(for='') Content:
+                    input#content.form-control(
+                        type='text', 
+                        placeholder='Add a comment' 
+                        name='content' 
+                        required = 'true'
+                    )
+                    if (error)
+                        p(style="color: red;") #{error}
+                    button.btn.btn-primary(type='submit') Submit
+        else    
+            div.comment-div Please log-in to add a comment 
+            a(href='/users/auth/login/')
+                span.nav-text.header-btn LOGIN
+
+
+    if !article
+        div.article-field
+            div.article-title= title
+
+            hr.hr-separate
  
 
-    if user
-        div.form-container
-            h1.title-form Add comment
-            div.text-infos
-            form(method='POST' action=`/articles/view/${article.id}/comments/add`)
-                div.form-group
-                label.label-form(for='') Content:
-                input#content.form-control(
-                    type='text', 
-                    placeholder='Add a comment' 
-                    name='content' 
-                    required = 'true'
-                )
-                if (error)
-                    p(style="color: red;") #{error}
-                button.btn.btn-primary(type='submit') Submit
-    else    
-        div.comment-div Please log-in to add a comment 
-        a(href='/users/auth/login/')
-            span.nav-text.header-btn LOGIN
+
 
 
     if (errors)
