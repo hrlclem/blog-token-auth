@@ -49,7 +49,7 @@ exports.article_add_post = [                            // Create new article PO
 
       await article.save((err) => {
         if(err) return next(err);
-        res.redirect("/")
+        res.redirect(`/articles/view/${article.id}`)
       })
     }
 ];

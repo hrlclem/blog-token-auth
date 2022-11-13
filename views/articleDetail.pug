@@ -28,21 +28,26 @@ block content
         hr.hr-separate
  
 
-    div.form-container
-        h1.title-form Add comment
-        div.text-infos
-        form(method='POST' action=`/articles/view/${article.id}/comments/add`)
-            div.form-group
-            label.label-form(for='') Content:
-            input#content.form-control(
-                type='text', 
-                placeholder='Add a comment' 
-                name='content' 
-                required = 'true'
-            )
-            if (error)
-                p(style="color: red;") #{error}
-            button.btn.btn-primary(type='submit') Submit
+    if user
+        div.form-container
+            h1.title-form Add comment
+            div.text-infos
+            form(method='POST' action=`/articles/view/${article.id}/comments/add`)
+                div.form-group
+                label.label-form(for='') Content:
+                input#content.form-control(
+                    type='text', 
+                    placeholder='Add a comment' 
+                    name='content' 
+                    required = 'true'
+                )
+                if (error)
+                    p(style="color: red;") #{error}
+                button.btn.btn-primary(type='submit') Submit
+    else    
+        div.comment-div Please log-in to add a comment 
+        a(href='/users/auth/login/')
+            span.nav-text.header-btn LOGIN
 
 
     if (errors)

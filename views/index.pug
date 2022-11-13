@@ -31,6 +31,14 @@ block content
     div
       a(href='/users/auth/login/')
         span.nav-text.header-btn LOGIN
-    //- Shows all articles from all writers
 
+    div.article-list
+      each article in articles
+        a(href=`${article.url}`)
+          div.article-container 
+            p.article-title.font-weight-bold= article.title
+            p.article-content= article.content
+            p.article-date= article.date
+            p.article-user= article.user.username
+        hr.hr-separate
     
