@@ -26,11 +26,11 @@ passport.use(new LocalStrategy({
 
 
 // Token initialization
+// ISSUE COMES FROM HERE ==> FUNCTION NEVER CALLED
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET_TOKEN,
   }, 
-  (req, res, next)=> {console.log("running"), next();},
   function (jwtPayload, cb) {
     return Users.findOneById(jwtPayload.id)
         .then(user => {
@@ -41,6 +41,7 @@ passport.use(new JWTStrategy({
         });
     }
 ));
+
 //   (jwtPayload, done) => {
 //     console.log(jwtPayload)
 //     Users.getUserById(jwtPayload.id, (err, user) => {

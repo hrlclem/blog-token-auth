@@ -52,7 +52,6 @@ app.use(function(req, res, next) {
 app.use('/', indexRouter);
 app.use('/users',  usersRouter);
 app.use('/articles', articlesRouter);
-// app.use('/articles/:articleid/comments', commmentsRouter);
 
 
 
@@ -112,8 +111,6 @@ app.post('/login', function (req, res, next) {
     });
   })(req, res);
 });
-
-
 
 
 // Logout function
