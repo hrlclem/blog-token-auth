@@ -141,6 +141,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// Check access authorization if logged in
+const freeAccess = (req, res, next) => {
+  if (req.user) {
+    return next();
+  }
+  res.redirect("/users/login");
+};
 
 
 // Import the mongoose module

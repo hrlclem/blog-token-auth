@@ -11,11 +11,10 @@ const freeAccess = (req, res, next) => {
     if (req.user) {
       return next();
     }
-    res.redirect("/users/login");
+    res.redirect("/users/nologin");
   };
-  
 
-  
+
 // -.com/users/-
 router.get('/', user_controller.users_list);                     // Display all users page GET
 router.get('/profile',                                           // Display profile page GET
