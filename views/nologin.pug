@@ -3,11 +3,9 @@ extends layout
 block content
   h1 NO LOGIN
   p NO LOGIN
-  h3 You can't access this page yet, please log-in first:               
-  div.connect
-    ul
-      a.button(href='/users/auth/login')  
+  h3 You can't access this page yet, please log-in first:    
+  a.profile-btn(href='/users/auth/login/')
+    span.btn.btn-primary Log in
   h3 Or sign-up:              
-    div.hconnect
-      ul
-        a.button(href='/users/auth/signup')  
+  a.add-article-btn(href='/users/auth/signup/')
+    span.btn.btn-primary Sign up

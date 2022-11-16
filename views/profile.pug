@@ -1,8 +1,27 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  //- // To check for errors
-  div #{user.username} CLick here
-  div #{token}
+  h1 Your dashboard
+
+  div.all-articles
+    if articles.length > 0
+      each article in articles
+        div.article-field
+          a(href=`${article.url}`)
+            h3.article-title= article.title
+            img.article-img(src='/images/article.jpg' height="300px")
+            p.article-content= article.content
+            p.article-date= article.date
+        form(method='POST' action=`/articles/view/${article.id}/delete`)
+          button.btn.btn-primary(type='submit') DELETE ARTICLE
+        hr.hr-separate
+
+    else
+        div.article-field
+          div.profile-text You don't have any article yet
+          a.add-article-btn(href='/articles/add')
+            span.btn.btn-primary Write your first article
+
+            hr.hr-separate
+
+

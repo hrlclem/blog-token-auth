@@ -3,13 +3,19 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
 
-
+const Article = require("../models/article")
 
 exports.users_list = (req,res) => {               // Display all users page GET
   res.render('index', { title: 'USERS'});
 };
-exports.profile_detail = (req,res) => {           // Display profile page GET
-  res.render('profile', { title: 'PROFILE', user:req.user});
+exports.profile_detail = async (req,res) => {           // Display profile page GET
+  try{
+    const articles = await Article.find({user: req.user.id});
+    console.log(articles)
+    return res.render('profile', { title: 'HOMEPAGE', user: req.user, articles: articles});
+  } catch (err) {
+    return  next(err);
+  }
 };
 
 

@@ -2,6 +2,7 @@ const { body, validationResult } = require("express-validator");
 
 const Article = require("../models/article")
 const Comment = require("../models/comment")
+const Users = require("../models/users")
 
 exports.articles_list = (req,res) => {                 // Display all articles page GET
 res.render('index', { title: 'ALL ARTICLES' });
@@ -11,8 +12,12 @@ exports.article_details_get = async (req,res, next) => {           // Display ar
     try{
       const article = await Article.findById(req.params.articleid) ;
       const comments = await Comment.find({article:req.params.articleid})
-      res.render('articleDetail', { title: 'ARTICLE', user: req.user, article:article, comments:comments });
-    
+      const author = await Users.findById(article.user)
+
+      res.render('articleDetail', { title: 'ARTICLE', user: req.user, article:article, author: author, comments:comments });
+      console.log("author" + author)
+      console.log("article" + article)
+
     } catch (err) {
       return  next(err);
     }
@@ -57,7 +62,7 @@ exports.article_add_post = [                            // Create new article PO
 exports.article_delete = (req, res, next) => {                // Delete Article
     Article.findByIdAndRemove(req.params.articleid, function (err) {
       if(err) return next(err);
-      res.render('articleDetail', { title: 'Article deleted successfully!'});
+      res.render('profile', { title: 'Article deleted successfully!'});
     })
 };
 

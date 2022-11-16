@@ -31,7 +31,7 @@ html
             else 
               div.header-right
                 ul.nav.col-lg-auto.justify-content-center.my-md-0.text-small.nav-right
-                  a.text-white.welcome-txt(href=`/users/${currentUser.id}`) Welcome, #{currentUser.name}
+                  a.welcome-txt(href=`/users/profile`) Welcome, #{currentUser.username}
                   li.nav-link.text-white
                     a(href="/logout")
                       span.nav-text.header-btn Log out

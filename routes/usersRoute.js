@@ -11,7 +11,7 @@ const freeAccess = (req, res, next) => {
     if (req.user) {
       return next();
     }
-    res.redirect("/users/nologin");
+    res.redirect("/users/auth/nologin");
   };
 
 
