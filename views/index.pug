@@ -5,7 +5,9 @@ block content
   p Welcome to #{title}
   if user
     div #{user.username}
-
+    div
+      a(href='/users/profile/')
+        span.nav-text.header-btn PROFILE ACCESS
     div
       a(href='/articles/add')
         span.nav-text.header-btn Add article

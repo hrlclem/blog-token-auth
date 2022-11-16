@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const passport = require("passport");
 require('../passport');
@@ -10,7 +11,7 @@ router.get('/', user_controller.users_list);                     // Display all 
 router.get('/profile',                                           // Display profile page GET
     passport.authenticate('jwt', {session: false}),             // Check if authorized
     // https://www.youtube.com/watch?v=favjC6EKFgw
-    (req,res, next) => {console.log(req.session.cookie); next();},
+    (req,res, next) => {console.log("------------------>"+req.session.cookie); next();},
     user_controller.profile_detail
 ); 
 

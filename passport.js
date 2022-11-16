@@ -6,7 +6,6 @@ const passportJWT = require("passport-jwt");
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 
-
 passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password'
@@ -27,11 +26,15 @@ passport.use(new LocalStrategy({
 
 // Token initialization
 // ISSUE COMES FROM HERE ==> FUNCTION NEVER CALLED
-passport.use(new JWTStrategy({
+passport.use(
+  'jwt',
+  new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET_TOKEN,
-  }, 
+  },
+  ()=>{console.log("------------------>running")}, 
   function (jwtPayload, cb) {
+    console.log("------------------>payLoad"+jwtPayload)
     return Users.findOneById(jwtPayload.id)
         .then(user => {
             return cb(null, user);
