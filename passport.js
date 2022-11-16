@@ -23,18 +23,13 @@ passport.use(new LocalStrategy({
 ));
 
 
-
 // Token initialization
-// ISSUE COMES FROM HERE ==> FUNCTION NEVER CALLED
 passport.use(
-  'jwt',
   new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.SECRET_TOKEN,
   },
-  ()=>{console.log("------------------>running")}, 
   function (jwtPayload, cb) {
-    console.log("------------------>payLoad"+jwtPayload)
     return Users.findOneById(jwtPayload.id)
         .then(user => {
             return cb(null, user);
@@ -45,18 +40,3 @@ passport.use(
     }
 ));
 
-//   (jwtPayload, done) => {
-//     console.log(jwtPayload)
-//     Users.getUserById(jwtPayload.id, (err, user) => {
-//       if(err){
-//       return done(err, false);
-//       }
-      
-//       if(user){
-//         return done(null, user);
-//       } else {
-//         return done(null, false);
-//       }
-//     });
-//   }
-// ));

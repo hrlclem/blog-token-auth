@@ -25,12 +25,14 @@ const Users = require("./models/users")
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Auth setup
 app.use(session({ 
   name: 'sessionCookie',
   secret: `${process.env.SECRET_SESSION}`, 
-  resave: true, 
+  resave: false, 
   saveUninitialized: false,
 }));
 app.use(passport.initialize());
@@ -42,7 +44,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(`${process.env.SECRET_SESSION}`));
 app.use(bodyParser.json())
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
@@ -101,13 +102,11 @@ app.post('/login', function (req, res, next) {
           if (err) {
               res.send(err);
           }
-
+      
       // const token = "Bearer " + jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
-      const token = jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
-      res.locals.currentUser = req.user
-      res.locals.currentToken = token
-      return res.redirect('/');
-      // return res.redirect('/users/profile');
+      // const token = jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, { expiresIn: 60 * 60 });
+
+      return res.redirect('/users/profile');
     });
   })(req, res);
 });
@@ -141,8 +140,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
 
 
 

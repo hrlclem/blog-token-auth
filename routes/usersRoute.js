@@ -1,17 +1,26 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const router = express.Router();
-const passport = require("passport");
+// const passport = require("passport");
+// const jwt = require('jsonwebtoken');
+
 require('../passport');
 
 const user_controller = require("../controllers/userController")
 
+const freeAccess = (req, res, next) => {
+    if (req.user) {
+      return next();
+    }
+    res.redirect("/users/login");
+  };
+  
+
+  
 // -.com/users/-
 router.get('/', user_controller.users_list);                     // Display all users page GET
 router.get('/profile',                                           // Display profile page GET
-    passport.authenticate('jwt', {session: false}),             // Check if authorized
-    // https://www.youtube.com/watch?v=favjC6EKFgw
-    (req,res, next) => {console.log("------------------>"+req.session.cookie); next();},
+    freeAccess,
+    // passport.authenticate('jwt', {session: false}),            // Check if authorized
     user_controller.profile_detail
 ); 
 
