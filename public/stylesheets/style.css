@@ -35,13 +35,14 @@ a:hover{
     display:flex;
     position: relative;
     font-size: 20px;
-    font-weight: 800;
     color:rgb(68, 68, 68);
   }
     .logo-text-down{
       position:absolute;
       top:14px;
       color:rgb(68, 68, 68);
+      margin-left: 30px;
+
     }
     .logo-text-up{
       position:absolute;
@@ -53,7 +54,7 @@ a:hover{
     }
   .title-header{
     font-size: 25px;
-    margin-left: 50px;
+    margin-left: 20px;
     color: #0C61B2
   }
   .header-right{
@@ -119,10 +120,8 @@ a:hover{
     display:flex;
     margin-top: 8%;
     margin-bottom: 8%;
-
-    margin-left: 10%;
-    margin-right: 10%;
-
+    margin-left: 15%;
+    margin-right: 15%;
   }
     .banner-left{
       width: 50%;
@@ -157,6 +156,9 @@ a:hover{
         position: relative;
         float: right;
         margin-right: 0;  
+        top: -15px;
+        height: 110%;
+        margin-left: 20%;
       }
 
       /* ARTICLE HOMEPAGE */
@@ -171,7 +173,7 @@ a:hover{
           display:grid;
           justify-content: center;
           grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-          grid-auto-rows: 100%;
+          grid-auto-rows: 318px;
           gap:30px;
           justify-items: center;
         }
@@ -192,7 +194,7 @@ a:hover{
               width: 100%;
             }
             .article-block{
-              width:100%
+              width:100%;
             }
             .article-title{
               font-size: 1rem;
@@ -205,6 +207,162 @@ a:hover{
             }
             .article-user{
               font-size: 0.6rem;
-
               color: grey;
             }
+
+
+
+
+ /* PROFILE */
+
+ .profile-page{
+  margin-top: 3%;
+  margin-bottom: 8%;
+  margin-left: 15%;
+  margin-right: 15%;
+}      
+  .profile-header{
+    display:flex;
+    justify-content: space-between;
+  }   
+  .profile-title-page{
+    font-size: 3rem;
+    padding-bottom: 4%;
+  }   
+  .add-article-btn-profile{
+    position:relative;
+    float:right;
+    margin-right: 0;
+    margin-top: 6%;
+  }
+  .article-title-profile{
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .btn-primary-profile{
+    background-color:#3379ba;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 5px;
+    width:100%;
+    font-size: 12px;
+    height:30px;
+    color:white;
+  }
+
+
+/* ARTICLE DETAIL */
+.article-div{
+  margin-top: 3%;
+  margin-bottom: 8%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+  .article-field{
+    margin-bottom: 6%;
+  }
+  .article-detail-header{
+    display:flex;
+    justify-content: space-between;
+  }
+    .article-detail-title{
+      font-size: 3rem;
+      padding-bottom: 0.5%;
+    }
+    .article-detail-content{
+      margin-top: 3%;
+      margin-left: 3%;
+      margin-right: 3%;
+
+    }
+    .delete-article-detail-btn{
+      position:relative;
+      float:right;
+      margin-right: 0;
+      margin-top: 10%;
+    }
+  .article-info{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 2%;
+  }
+    .article-detail-user{
+      font-size: 0.8rem;
+      color: grey;
+    }
+    .article-detail-date{
+      font-size: 0.6rem;
+      color: grey;
+    }
+  .article-detail-img{
+    width: 100%;
+    height: 50%;
+    margin-bottom: 1%;
+  }
+  .comment-box{
+    margin-bottom: 1%;
+    background-color: white;
+    padding: 2%;
+    border-radius: 4px;
+  }
+  .comment-div{
+    background-color: rgb(246, 245, 245);
+    border-radius: 5px;
+    padding: 2%;
+  }
+  .comment-display-date{
+    font-size: 0.6rem;
+    margin-top: 1%;
+  }
+  .comment-div-info{
+    margin-top: 2%;
+    margin-right: 40px;
+  }
+  .label-form{
+    margin-top: 2%;
+  }
+  .form-control{
+    margin-bottom: 1%;
+
+  }
+
+
+  /* WRITE ARTICLE */
+
+  .article-form-container{
+    margin-top: 3%;
+    margin-bottom: 8%;
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+  .title-add-article{
+    margin-bottom: 4%;
+  }
+  .content-add-article{
+    margin-bottom: 3%;
+    height:300px;
+  }
+
+   /* LOGIN */
+
+   .login-form-container, .signup-form-container{
+    margin-top: 3%;
+    margin-bottom: 8%;
+    margin-left: 25%;
+    margin-right: 25%;
+  }
+
+
+/* FOOTER */
+.footer {
+  font-family: arial;
+  color: #212121;
+  font-size: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  text-align: center;
+  background-color:rgb(242, 240, 240);
+}

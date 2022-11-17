@@ -1,14 +1,14 @@
 extends layout
 
 block content
-  div.form-container
+  div.article-form-container
     h1.title-form= title
     div.text-infos 
 
     form(method='POST' action='')
       div.form-group
         label.label-form(for='title') Title:
-        input#title.form-control(
+        input#title.form-control.title-add-article(
           type='text', 
           placeholder='Title of your article' 
           name='title' 
@@ -18,7 +18,7 @@ block content
           p(style="color: red;") #{error}
 
         label.label-form(for='content') Content:
-        input#content.form-control(
+        input#content.form-control.content-add-article(
           type='text', 
           placeholder='Add some content' 
           name='content' 
@@ -26,9 +26,11 @@ block content
         )
         if (error)
           p(style="color: red;") #{error}
-      button.btn.btn-primary(type='submit') Submit
+      button.btn.btn-primary(type='submit') Publish your article
 
       // Add button clear
 
     if (errors)
       p #{errors}
+
+  div.footer Clément Hurel © All rights reserved, 2022

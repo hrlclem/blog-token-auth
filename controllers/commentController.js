@@ -2,7 +2,6 @@ const { body, validationResult } = require("express-validator");
 
 const Comment = require("../models/comment")
 
-
 exports.comment_list = (req,res) => {                     // Display all comments of an article page GET
   res.render('comment', { title: 'COMMENTS' });
 };

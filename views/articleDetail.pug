@@ -1,66 +1,62 @@
 extends layout
 
 block content
-    div.article-div
-        if (user && user.id == article.user)
-            form(method='POST' action=`/articles/view/${article.id}/delete`)
-                button.btn.btn-primary(type='submit') DELETE ARTICLE
 
+    div.article-div
         if article
             div.article-field
-                h3.article-title= article.title
-                img.article-img(src='/images/article.jpg' height="300px")
-                p.article-content= article.content
+                div.article-detail-header 
+                    div.article-detail-title= article.title
+                    if (user && user.id == article.user)
+                        form(method='POST' action=`/articles/view/${article.id}/delete`)
+                            button.btn.btn-primary.delete-article-detail-btn(type='submit') DELETE THIS ARTICLE
                 div.article-info
-                    p.article-user= author.username
-                    p.article-date= article.date
+                    div.article-detail-user Written by #{author.username}
+                    div.article-detail-date #{article.date.toString().slice(0,15)}
+                img.article-detail-img(src='/images/article.jpg' height="300px")
+                div.article-detail-content= article.content
 
-                hr.hr-separate
-
-
-            if comments
+            if comments.length > 0
                 div.comment-div
                     div.comment-list
                     each comment in comments
-                        div.comment-content= comment.content
-                        hr.hr-separate
-                        div.comment-date= comment.date
-                        hr.hr-separate
-                hr.hr-separate
+                        div.comment-box
+                            div.comment-content= comment.content
+                            div.comment-display-date #{comment.date.toString().slice(0,15)}
             else 
                 div.comment-div
-                    p.no-comment-text There is no comment yet, add the first one below! 
-                hr.hr-separate
+                    div.no-comment-text There is no comment yet, add the first one below! 
         
             if user
                 div.form-container
-                    h1.title-form Add comment
                     div.text-infos
-                    form(method='POST' action=`/articles/view/${article.id}/comments/add`)
-                        div.form-group
-                        label.label-form(for='') Content:
-                        input#content.form-control(
-                            type='text', 
-                            placeholder='Add a comment' 
-                            name='content' 
-                            required = 'true'
-                        )
-                        if (error)
-                            p(style="color: red;") #{error}
-                        button.btn.btn-primary(type='submit') Submit
+                        form(method='POST' action=`/articles/view/${article.id}/comments/add`)
+                            div.form-group
+                            label.label-form(for='') Add comment
+                            input#content.form-control(
+                                type='text', 
+                                placeholder='Add a comment' 
+                                name='content' 
+                                required = 'true'
+                            )
+                            if (error)
+                                div(style="color: red;") #{error}
+                            button.btn.btn-primary(type='submit') Submit
             else    
-                div.comment-div Please log-in to add a comment 
-                a.profile-btn(href='/users/auth/login/')
-                    span.btn.btn-primary Log in
+                div.comment-div-out
+                    div.comment-div-info Please log-in to add a comment 
+                    a.profile-btn(href='/users/auth/login/')
+                        span.btn.btn-primary Log in
 
 
         if !article
             div.article-field
-                div.article-title There is no article here!
-
-                hr.hr-separate
+                div.article-detail-title There is no article here!
+            hr.hr-separate
     
 
 
     if (errors)
     p #{errors}
+
+    div.footer Clément Hurel © All rights reserved, 2022

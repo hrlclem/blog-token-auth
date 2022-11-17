@@ -62,7 +62,7 @@ exports.article_add_post = [                            // Create new article PO
 exports.article_delete = (req, res, next) => {                // Delete Article
     Article.findByIdAndRemove(req.params.articleid, function (err) {
       if(err) return next(err);
-      res.render('profile', { title: 'Article deleted successfully!'});
+      res.redirect(`/users/profile`)
     })
 };
 

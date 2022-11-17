@@ -39,8 +39,8 @@ block content
               img.article-block-img(src='/images/article.jpg')
               div.article-view 
                 div.article-title.font-weight-bold= article.title
-                div.article-date= article.date
                 div.article-user By #{article.user.username}
+                div.article-date #{article.date.toString().slice(0,15)}
 
     else
       div.article-list
@@ -50,5 +50,8 @@ block content
               img.article-block-img(src='/images/article.jpg' height="300px")
               div.article-view 
                 div.article-title.font-weight-bold= article.title
-                div.article-date= article.date
                 div.article-user By an anonymous
+                div.article-date #{article.date.toString().slice(0,15)}
+
+  div.footer Clément Hurel © All rights reserved, 2022
+  
