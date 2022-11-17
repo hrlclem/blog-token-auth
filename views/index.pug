@@ -2,31 +2,30 @@ extends layout
 
 block content
   div.homepage-banner
-  if user
-    div.banner-left
-      h1.homepage-title Token Club
-      p.homepage-text Welcome to the home of tech writers, where experts from the tech field share their insights on modern technology. Token Club will help you stay up-to-date with the latest developments in the tech field so you can always stay ahead of the curve.
-      div.btns-homepage
-        a.profile-btn(href='/users/profile/')
-          span.btn.btn-primary Profile
-        a.add-article-btn(href='/articles/add')
-          span.btn.btn-primary Write your article
-    div.banner-right
-      img.homepage-img(src='/images/homepage.png')
-    hr.hr-separate
-
-  else
-    div.banner-left
-      h1.hompeage-title Token Club
-      p.hompeage-text Welcome to the home of tech writers, where experts from the tech field share their insights on modern technology. Token Club will help you stay up-to-date with the latest developments in the tech field so you can always stay ahead of the curve.
-      div.btns-homepage
-        a.profile-btn(href='/users/auth/login/')
-          span.btn.btn-primary Log in
-        a.add-article-btn(href='/users/auth/signup/')
-          span.btn.btn-primary Sign up
-    div.banner-right
-      img.homepage-img(src='/images/homepage.png')
-    hr.hr-separate
+    if user
+      div.banner-left
+        div.homepage-title Token Club
+        div.homepage-text Welcome to the home of tech writers, where experts from the tech field share their insights on modern technology. 
+        div.homepage-undertext Token Club will help you stay up-to-date with the latest developments in the tech field so you can always stay ahead of the curve.
+        div.btns-homepage
+          a.profile-btn(href='/users/profile/')
+            span.btn.btn-primary Profile →
+          a.add-article-btn(href='/articles/add')
+            span.btn.btn-primary Write your article 🖋
+      div.banner-right
+        img.homepage-img(src='/images/homepage.png')
+    else
+      div.banner-left
+        h1.homepage-title Token Club
+        p.homepage-text Welcome to the home of tech writers, where experts from the tech field share their insights on modern technology. Token Club will help you stay up-to-date with the latest developments in the tech field so you can always stay ahead of the curve.
+        div.btns-homepage
+          a.profile-btn(href='/users/auth/login/')
+            span.btn.btn-primary Log in
+          a.add-article-btn(href='/users/auth/signup/')
+            span.btn.btn-primary Sign up
+      div.banner-right
+        img.homepage-img(src='/images/homepage.png')
+  hr.hr-separate
 
 
   div.all-articles-div
@@ -37,23 +36,19 @@ block content
         each article in articles
           div.article-block
             a(href=`${article.url}`)
-              img.article-img(src='/images/article.jpg')
+              img.article-block-img(src='/images/article.jpg')
               div.article-view 
-                p.article-title.font-weight-bold= article.title
-                p.article-content= article.content
-                p.article-date= article.date
-                p.article-user= article.user.username
-            hr.hr-separate
+                div.article-title.font-weight-bold= article.title
+                div.article-date= article.date
+                div.article-user By #{article.user.username}
 
     else
       div.article-list
         each article in articles
           div.article-block
             a(href=`${article.url}`)
-              img.article-img(src='/images/article.jpg' height="300px")
+              img.article-block-img(src='/images/article.jpg' height="300px")
               div.article-view 
-                p.article-title.font-weight-bold= article.title
-              p.article-content= article.content
-              p.article-date= article.date
-              p.article-user Anonymous
-          hr.hr-separate
+                div.article-title.font-weight-bold= article.title
+                div.article-date= article.date
+                div.article-user By an anonymous

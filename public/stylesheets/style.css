@@ -10,7 +10,9 @@ a {
   color: #0C61B2;
 }
 
-
+a:hover{
+  text-decoration: none;
+}
 
 
 /* HEADER CSS */
@@ -82,7 +84,7 @@ a {
   justify-content: center;
   text-align: center;
   padding: 10px 20px 10px 20px;
-  background-color: #202325;
+  background-color: #ccdae4;
   border-radius: 12px;
   margin-left: 20px;
   font-family: 'Libre Caslon Text', serif;
@@ -92,10 +94,11 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Noto Sans JP', sans-serif;
 
 }
 .nav-link:hover{
-  background-color: #111213;
+  background-color: #efeded;
 }
   .nav-text{
     display:block;
@@ -108,3 +111,100 @@ a {
     filter: invert(100%) sepia(100%) saturate(38%) hue-rotate(321deg) brightness(110%) contrast(110%);
   }
 
+
+
+  /* HOMEPAGE */
+
+  .homepage-banner{
+    display:flex;
+    margin-top: 8%;
+    margin-bottom: 8%;
+
+    margin-left: 10%;
+    margin-right: 10%;
+
+  }
+    .banner-left{
+      width: 50%;
+      margin-right: 5%;
+    }
+      .homepage-title{
+        font-size: 3rem;
+        padding-bottom: 4%;
+      }
+      .homepage-text{
+        font-size: 1rem;
+        padding-bottom: 2%;
+
+      }
+      .homepage-undertext{
+        font-size: 0.8rem;
+        padding-bottom: 10%;
+      }
+      .btn-primary{
+        margin-right: 3%;
+        background-color: #0C61B2;
+      }
+      .hr-separate{
+        border-top: 1px solid #bbb;
+        margin-top: 8%;
+        margin-bottom: 6%;
+      }
+    .banner-right{
+      width: 50%;
+    }
+      .homepage-img{
+        position: relative;
+        float: right;
+        margin-right: 0;  
+      }
+
+      /* ARTICLE HOMEPAGE */
+      .all-articles-div{
+        margin-top: 4%;
+        margin-bottom: 8%;
+    
+        margin-left: 20%;
+        margin-right: 20%;
+      }
+        .article-list{
+          display:grid;
+          justify-content: center;
+          grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+          grid-auto-rows: 100%;
+          gap:30px;
+          justify-items: center;
+        }
+        .article-block:hover{
+          box-shadow: 5px 5px 80px 8px #c2c5c8;
+        }
+          .article-view{
+            box-shadow: 5px 5px 80px 8px #e0e4e7;
+            padding: 3%;
+          }
+            .title{
+              margin-bottom: 3%;
+            }
+            .article-list{
+              display: grid;
+            }
+            .article-block-img{
+              width: 100%;
+            }
+            .article-block{
+              width:100%
+            }
+            .article-title{
+              font-size: 1rem;
+              margin-bottom: 2%;
+            }      
+            .article-date{
+              font-size: 0.6rem;
+              margin-bottom: 2%;
+
+            }
+            .article-user{
+              font-size: 0.6rem;
+
+              color: grey;
+            }

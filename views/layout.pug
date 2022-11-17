@@ -30,10 +30,11 @@ html
                       span.nav-text.header-btn Sign up
             else 
               div.header-right
-                ul.nav.col-lg-auto.justify-content-center.my-md-0.text-small.nav-right
+                ul.nav.justify-content-center
                   a.welcome-txt(href=`/users/profile`) Welcome, #{currentUser.username}
-                  li.nav-link.text-white
-                    a(href="/logout")
+ 
+                  a(href="/logout")
+                    li.nav-link
                       span.nav-text.header-btn Log out
 
     div.content
