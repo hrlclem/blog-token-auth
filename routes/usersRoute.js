@@ -19,7 +19,6 @@ const freeAccess = (req, res, next) => {
 router.get('/', user_controller.users_list);                     // Display all users page GET
 router.get('/profile',                                           // Display profile page GET
     freeAccess,
-    // passport.authenticate('jwt', {session: false}),            // Check if authorized
     user_controller.profile_detail
 ); 
 
@@ -28,6 +27,7 @@ router.post('/auth/signup', user_controller.signup_post);        // Process sign
 router.get('/auth/login', user_controller.login_get);            // Display login page POST
 
 router.get('/auth/nologin', user_controller.nologin_get);        // No Login error page
+router.get('/auth/nouser', user_controller.nouser_get);           // No user error page
 
 
 module.exports = router;

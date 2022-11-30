@@ -11,7 +11,10 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require('body-parser');
 const app = express();
+
 require('./passport');
+
+
 
 const jwt = require('jsonwebtoken');
 
@@ -92,10 +95,7 @@ passport.deserializeUser(function(id, done) {
 app.post('/login', function (req, res, next) {
   passport.authenticate('local', {session: true}, (err, user, info) => {
       if (err || !user) {
-          return res.status(400).json({
-              message: 'Something is not right',
-              user : user
-          });
+          return   res.redirect('/users/auth/nouser');
       }
           
       req.login(user, {session: true}, (err) => {
@@ -162,4 +162,4 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 
-module.exports = app;
+module.exports =  app;
