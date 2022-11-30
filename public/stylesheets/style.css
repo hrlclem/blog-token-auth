@@ -55,6 +55,7 @@ a:hover{
   .title-header{
     font-size: 1.5rem;
     margin-left: 20px;
+    width:150px;
     color: #0C61B2
   }
   .header-right{
@@ -77,7 +78,6 @@ a:hover{
 .logo-header-div{
   display:flex;
   justify-content: space-between;
-  width: 100%;
 }
 
 .nav-link{
