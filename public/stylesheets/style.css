@@ -53,7 +53,7 @@ a:hover{
       color:rgb(68, 68, 68);    
     }
   .title-header{
-    font-size: 25px;
+    font-size: 1.5rem;
     margin-left: 20px;
     color: #0C61B2
   }
@@ -416,4 +416,59 @@ a:hover{
   .article-list{
     row-gap:12rem;
   }
+  .text-header-div{
+    margin:0.2rem;
+  }
+  .header-left{
+    gap:0;
+    display:flex;
+  }
+  .header-right{
+    display:block;
+  }
+  .logo-header-div{
+    width:auto;
+  }
+  .title-header{
+    margin:0;
+  }
+  .header{
+    padding:0;
+  }
+  .container-div{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+  .nav-right{
+    display: flex;
+  }
+  .header-btn{
+    margin: 0;
+  }
+  .article-list{
+    row-gap:6rem;
+  }
+  .login-form-container, 
+  .signup-form-container{
+   margin-left: 8%;
+   margin-right: 8%;
+   max-width:600px;
+ }
+ .profile-title-page{
+  font-size: 1.3rem;
+  padding-bottom: 4%;
+}   
+.article-div{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.delete-article-detail-btn{
+  font-size: 0.65rem;
+}
+.profile-page{
+  margin-left: 5%;
+  margin-right: 5%;
+} 
 }
