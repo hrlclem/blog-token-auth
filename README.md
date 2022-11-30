@@ -3,6 +3,8 @@
 ✏️ Token Club Blog is a new project following The Odin Project cursus. It allows the admin to create new blog articles and users to login and add comments.\
 The aim is to practice using user authentification, password encryption and JSON Web Token for authentification/access restriction.
 \
+The demo is available here: https://blog-token-auth-vercel.vercel.app
+\
 \
 ![](https://github.com/hrlclem/blog-token-auth/blob/main/tokenclub.gif)
 
