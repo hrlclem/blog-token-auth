@@ -89,4 +89,6 @@ exports.login_post = (req,res) => {               // Process login  POST
 exports.nologin_get = (req,res) => {               // NO LOGIN page
   res.render('nologin', { title: 'NOLOGIN' });
 };
-
+exports.nouser_get = (req,res) => {               // NO LOGIN page
+  res.render('nouser', { title: 'No user found' });
+};

@@ -123,11 +123,6 @@ a:hover{
     margin-left: 15%;
     margin-right: 15%;
   }
-  @media (max-width: 767px) {
-    .homepage-banner{
-      display:block;
-    }
-  }
 
     .banner-left{
       width: 50%;
@@ -140,11 +135,12 @@ a:hover{
       .homepage-text{
         font-size: 1rem;
         padding-bottom: 2%;
-
+        display:block;
       }
       .homepage-undertext{
-        font-size: 0.8rem;
+        font-size: 0.6rem;
         padding-bottom: 10%;
+        font-style: italic;
       }
       .btn-primary{
         margin-right: 3%;
@@ -160,13 +156,15 @@ a:hover{
     }
       .homepage-img{
         position: relative;
-        float: right;
-        margin-right: 0;  
+        float: left;
+        /* margin-right: 0;   */
         top: -15px;
         height: 110%;
+        max-height: 345px;
+        width: 100%;
+        max-width: 425px;
         margin-left: 20%;
       }
-
       /* ARTICLE HOMEPAGE */
       .all-articles-div{
         margin-top: 4%;
@@ -181,14 +179,19 @@ a:hover{
           grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
           grid-auto-rows: 318px;
           gap:5rem;
+          row-gap:7rem;
           justify-items: center;
         }
-        .article-block:hover{
-          box-shadow: 5px 5px 80px 8px #c2c5c8;
+        .article-block{
+          border-radius: 10%;
         }
+          .article-view:hover{
+            box-shadow: 5px 5px 80px 8px #c2c5c8;
+          }
           .article-view{
             box-shadow: 5px 5px 80px 8px #e0e4e7;
             padding: 3%;
+            border-radius: 0 0 25px 25px;
           }
             .title{
               margin-bottom: 3%;
@@ -232,7 +235,7 @@ a:hover{
     justify-content: space-between;
   }   
   .profile-title-page{
-    font-size: 3rem;
+    font-size: 2rem;
     padding-bottom: 4%;
   }   
   .add-article-btn-profile{
@@ -241,14 +244,17 @@ a:hover{
     margin-right: 0;
     margin-top: 6%;
   }
+  .add-article-btn-profile,.add-article-btn{
+    min-width: 150px;
+  }
   .article-title-profile{
     font-size: 1rem;
     margin-bottom: 20px;
   }
   .btn-primary-profile{
     background-color:#3379ba;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
     margin-top: 5px;
     width:100%;
     font-size: 12px;
@@ -272,7 +278,7 @@ a:hover{
     justify-content: space-between;
   }
     .article-detail-title{
-      font-size: 3rem;
+      font-size: 2rem;
       padding-bottom: 0.5%;
     }
     .article-detail-content{
@@ -322,6 +328,7 @@ a:hover{
   }
   .comment-div-info{
     margin-top: 2%;
+    margin-bottom: 1%;
     margin-right: 40px;
   }
   .label-form{
@@ -351,11 +358,23 @@ a:hover{
 
    /* LOGIN */
 
-   .login-form-container, .signup-form-container{
+   .login-form-container, 
+   .signup-form-container{
     margin-top: 3%;
     margin-bottom: 8%;
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 30%;
+    margin-right: 30%;
+    max-width:600px;
+  }
+  .nologin-div{
+   margin-top: 3%;
+   margin-bottom: 8%;
+   margin-left: 18%;
+   margin-right: 18%;
+ }
+  .orisignup{
+    font-size: 1rem;
+    margin-top: 2rem;
   }
 
 
@@ -371,4 +390,30 @@ a:hover{
   padding-top: 5px;
   text-align: center;
   background-color:rgb(242, 240, 240);
+}
+
+
+@media (max-width: 1000px) {
+  .banner-left{
+    margin: 0;
+    width: 100%;
+  }
+  .banner-right{
+    margin: 0;
+    width: 100%;
+  }
+  .homepage-banner{
+    display:block;
+  }
+  .homepage-img{
+    display:none;
+  }
+  .article-list{
+    row-gap:17rem;
+  }
+}
+@media (max-width: 800px) {
+  .article-list{
+    row-gap:12rem;
+  }
 }
